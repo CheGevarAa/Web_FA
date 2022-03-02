@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Scoring</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<form action="" method="POST">
+		<h1></h1>
+		<p><i></i></p>
+		<fieldset>
+			<legend>Contact info</legend>
+			<label for="name">Name<em>*</em></label>
+			<input type="text" placeholder="Valeriy Petrov" value="Petr Petrov" autofocus required><br>
+			<label for="phone">Phone</label>
+			<input type="text" placeholder="8-800-555-35-35" value="+7(905)333-33-33"><br>
+			<label for="mail">E-mail<em>*</em></label>
+			<input type="text" placeholder="test@gmail.com" value="test@yandex.ru" required><br>
+		</fieldset>
+		<fieldset>
+			<legend>Additional info</legend>
+			<label for="gender">Sex</label>
+			<select name="gender" id="gender">
+				<option value="male">M</option>
+				<option value="female">F</option>
+			</select><br>
+			<label for="birthdate">Date<em>*</em></label>
+			<input type="date" name="birthdate" id="birthdate" value="1984-13-12" required><br>
+			<label for="period">period<em>*</em></label>
+			<input type="number" name="period" id="period" min="0" max="100" value="25" required><br>
+			<label for="professional">prof</label>
+			<select name="professional" id="professional">
+				<option value="driver">driver</option>
+				<option value="policeman">policeman</option>
+				<option value="pilot">pilot</option>
+				<option value="manager">manager</option>
+				<option value="judge">judge</option>
+				<option value="developer">developer</option>
+				<option value="teacher">teacher</option>
+			</select><br>
+			<label for="sphere">sphere</label>
+			<select name="sphere" id="sphere">
+				<option value="public">public</option>
+				<option value="other">other</option>
+			</select>
+			<label for="work">work<em>*</em></label>
+			<input type="number" name="work" id="work" min="0" max="50" value="7" required><br>
+			<label for="finanse">finanse</label><br>
+			<label for="finanse">bank</label>
+			<input type="checkbox" name="bank" id="bank"><br>
+			<label for="finanse">realestate</label>
+			<input type="checkbox" name="realestate" id="realestate"><br>
+			<label for="finanse">ensuranse</label>
+			<input type="checkbox" name="ensurance" id="ensuranse"><br>
+		</fieldset>
+		<input type="submit" value="Send" id="submit_btn">
+	</form>
+</body>
+</html>
