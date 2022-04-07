@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+  <h1>Сервис для курсов валют</h1>
+  <div id="block">
+    <label for="select">Choose</label>
+    <select id="select" onchange="getRate2()">
+      <option value=""></option>
+      <option value="USD">доллар</option>
+      <option value="EUR">Евро</option>
+      <option value="CNY"> Юань</option>
+    </select>
+    <br>
+    <label for="currency_value">Курс:</label>
+    <span id="currency_value">0</span>
+    <!--<div id="currensy_value">0</div>
+    <input type="number" id="currency_value">-->
+  </div>
+  <script>
+    async function getRate2() {
+      let curr = document.getElementById('select').value;
+      let url = "http://localhost:3000/get/" + curr;
+
+      let response = await fetch(url);
+      let data = await response.json();
+      let course = data["value"];
+      document.getElementById("currency_value").innerText=course;
+    }
+    function getRate() {
+      let curr = document.getElementById('select').value;
+      let url = "https://www.cbr-xml-daily.ru/daily_json.js";
+      fetch(url)
+        .then((res)=>{return res.json();})
+        .then((data)=>{let course = data['Valute'][curr]['Value'];
+                            document.getElementById("currency_value").innerText=course});
+    }
+  </script>
+</body>
+
+</html>
