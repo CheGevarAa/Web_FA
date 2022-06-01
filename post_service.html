@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Почта</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <style>
         label {
             width: 300px;
@@ -23,10 +24,15 @@
         alert('Сервер прислал Вам сообщение: '+message);
     });</script>
 <script>
+    var recognizer = new webkitSpeechRecognition();
+    recognizer.interimResults = true;
+    recognizer.continuous = true;
+    recognizer.lang = 'ru-Ru';
+
     async function sendMessage(){
         var text = document.getElementById("textarea").value;
         var email = document.getElementById("email").value;
-        //console.log("email " +email);
+        console.log("email " +email);
         if (email == "") {
             console.log("no email");
             alert('Введите получателя');
@@ -34,20 +40,38 @@
             socket.emit("eventClient", {message: text, receipient: email});
         }
     }
+
+    function stopRecognition(){
+        recognizer.stop();
+    }
+
+    function speechRecognition(){
+        recognizer.onresult = function (event) {
+            var result = event.results[event.resultIndex];
+            if (result[0].transcript.includes("Отправь письмо")) {
+                sendMessage();
+            } else if (result[0].transcript.includes("Останови запись")) {
+                stopRecognition();
+            } else {
+                document.getElementById("textarea").value = result[0].transcript;
+            }
+        };
+        recognizer.start();
+    }
 </script>
 
     <div id="wrapper">
-        <p><label>Получатель: </label><input style="width:300px;" type="email" id="email"></p>
+        <p><label>Получатель: </label><input style="border: 3px solid grey; border-radius: 8px; width: 300px;" type="email" id="email" value="ilya.pop.2014@yandex.ru"></p>
         <p><label>Текст:</label>
-        <textarea id="textarea" style="width: 300px; height: 150px;">
+        <textarea id="textarea" style="border: 3px solid grey; border-radius: 8px; width: 370px; height: 150px;">
             Привет! Как дела?
         </textarea></p>
     </div>
 
     <div id="buttons">
-        <button onclick="sendMessage()" class="sendMessage">Отправить</button>
-        <button onclick="record()" class="record">Записать с микрофона</button>
-        <button onclick="voice()" class="voice">Озвучить текст</button>
+        <button onclick="sendMessage()" class="btn btn-primary">Отправить</button>
+        <button onclick="speechRecognition()" class="btn btn-success">Записать с микрофона</button>
+        <button onclick="stopRecognition()" class="btn btn-danger">Остановить запись</button>
     </div>
 </body>
 </html>

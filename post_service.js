@@ -6,6 +6,8 @@ const nodemailer = require("nodemailer");
 
 const port = 5000;
 
+const config = require("./config.json");
+
 io.on("connection", function(socket){
     console.log("Клиент подключен");
     socket.emit('message', 'Связь настроена!');
@@ -14,7 +16,8 @@ io.on("connection", function(socket){
         console.log("Сообщение от клиента: "+data.message);
         console.log("Получатель: "+data.receipient);
 
-        /*var transporter = nodemailer.createTransport({
+
+        var transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
             secure: true,
@@ -27,12 +30,12 @@ io.on("connection", function(socket){
             subject: "Test",
             text: data.message,
             html: data.message
-        });*/
+        });
     });
 });
 
 
-pathFile = path.resolve("post_service.html");
+pathFile = path.resolve("index.html");
 
 app.get('/', (req, res)=>{
     res.sendFile(pathFile);
